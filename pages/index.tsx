@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <C.Home>
       <a
-        href="https://octodex.github.com/images/inspectocat.jpg"
+        href="https://octodex.github.com/inspectocat/"
         target="_blank"
         rel="noreferrer"
       >
