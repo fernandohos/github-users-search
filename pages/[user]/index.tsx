@@ -1,13 +1,14 @@
 import React from "react";
-import * as C from "@styles/user";
-import { Header } from "app/components/Header";
 import { gql, GraphQLClient } from "graphql-request";
 import Image from "next/image";
 import { GetServerSidePropsContext } from "next";
+import * as C from "@styles/user";
 import work from "@images/work.svg";
 import email from "@images/email.svg";
 import location from "@images/location.svg";
-import { RepositoryCard } from "app/components/RepositoryCard";
+import { RepositoryCard } from "@components/RepositoryCard";
+import { Header } from "@components/Header";
+import { AllRepositoriesButton } from "@components/AllRepositoriesButton";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -154,6 +155,7 @@ export default function User({ user }: UserPageProps) {
                     </div>
                 </div>
             </C.Content>
+            <AllRepositoriesButton />
         </C.UserHome>
     );
 }
