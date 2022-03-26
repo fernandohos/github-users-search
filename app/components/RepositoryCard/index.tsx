@@ -88,7 +88,7 @@ export function RepositoryCard(props: RepositoryCardType) {
                     return languagePercentage > 5 ? (
                         <C.Language
                             color={language.color}
-                            key={language.name}
+                            key={i}
                             size={languagePercentage}
                         >
                             <p>
