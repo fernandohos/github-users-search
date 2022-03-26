@@ -23,7 +23,7 @@ export const Header = styled.header`
         }
 
         input {
-            flex: 1;
+            width: 100%;
             height: 4rem;
             border: none;
             padding-left: 1rem;
@@ -37,6 +37,7 @@ export const Header = styled.header`
         button {
             aspect-ratio: 1/1;
             display: flex;
+            min-width: 4rem;
             padding: 0.5rem;
             align-items: center;
             justify-content: center;
