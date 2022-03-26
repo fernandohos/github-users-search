@@ -7,6 +7,7 @@ import { GetServerSidePropsContext } from "next";
 import work from "@images/work.svg";
 import email from "@images/email.svg";
 import location from "@images/location.svg";
+import { RepositoryCard } from "app/components/RepositoryCard";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -29,6 +30,31 @@ type UserPageProps = {
         };
         following: {
             totalCount: number;
+        };
+        pinnedItems: {
+            totalCount: number;
+            nodes: {
+                name: string;
+                description: string;
+                url: string;
+                createdAt: string;
+                databaseId: number;
+                homepageUrl: string;
+                forkCount: number;
+                forkingAllowed: boolean;
+                stargazerCount: number;
+                languages: {
+                    totalSize: number;
+                    totalCount: number;
+                    edges: {
+                        size: number;
+                    }[];
+                    nodes: {
+                        color: string;
+                        name: string;
+                    }[];
+                };
+            }[];
         };
     };
 };
@@ -103,12 +129,28 @@ export default function User({ user }: UserPageProps) {
                                 <p>{user.following.totalCount}</p>
                             </div>
                         </div>
-                        <a href={user.url}>
+                        <a href={user.url} target="_blank" rel="noreferrer">
                             <span>
                                 Visit {user.name.split(" ")[0]} on{" "}
                                 <strong>GitHub</strong>
                             </span>
                         </a>
+                    </div>
+                </div>
+                <div className="repositories-content">
+                    <p>
+                        Pinned Repositories &#40;{user.pinnedItems.totalCount}
+                        &#41;
+                    </p>
+                    <div className="repositories-grid">
+                        {user.pinnedItems.nodes.map((repository) => {
+                            return (
+                                <RepositoryCard
+                                    key={repository.databaseId}
+                                    {...repository}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
             </C.Content>
@@ -135,6 +177,33 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
                 }
                 following {
                     totalCount
+                }
+                pinnedItems(first: 6) {
+                    totalCount
+                    nodes {
+                        ... on Repository {
+                            databaseId
+                            name
+                            description
+                            url
+                            createdAt
+                            homepageUrl
+                            forkCount
+                            forkingAllowed
+                            stargazerCount
+                            languages(first: 6) {
+                                totalSize
+                                totalCount
+                                edges {
+                                    size
+                                }
+                                nodes {
+                                    color
+                                    name
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

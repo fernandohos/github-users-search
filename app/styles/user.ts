@@ -48,17 +48,18 @@ export const UserHome = styled.div`
 `;
 
 export const Content = styled.main`
+    width: 88%;
+    margin: auto;
+
     .user-content {
         display: flex;
         width: 100%;
-        width: 88%;
-        margin: 4rem auto;
+        margin-top: 4rem;
 
         @media (max-width: 800px) {
             flex-direction: column;
         }
 
-        
         .user-info-wrapper {
             display: flex;
             @media (max-width: 500px) {
@@ -106,12 +107,17 @@ export const Content = styled.main`
             }
 
             .user-info-details {
-                opacity: 0.6;
                 margin-top: 1rem;
                 display: grid;
                 grid-template-columns: 2.5rem 1fr;
                 gap: 1rem;
                 min-width: 0;
+                color: #777;
+
+                img {
+                    filter: invert(57%) sepia(92%) saturate(1119%)
+                        hue-rotate(359deg) brightness(105%) contrast(106%);
+                }
 
                 .email {
                     overflow: hidden;
@@ -129,10 +135,10 @@ export const Content = styled.main`
 
             @media (max-width: 800px) {
                 flex-direction: row;
-                margin: 2rem 0;
+                margin: 2rem 0 0;
             }
 
-            @media(max-width: 500px) {
+            @media (max-width: 500px) {
                 margin: 0;
                 a {
                     margin-left: 1rem;
@@ -165,6 +171,28 @@ export const Content = styled.main`
                 line-height: 2rem;
                 text-decoration: none;
             }
+        }
+    }
+
+    .repositories-content {
+        > p {
+            margin-top: 2rem;
+        }
+
+        .repositories-grid {
+            margin-top: 2rem;
+            display: grid;
+            grid-auto-rows: 1fr;
+            grid-template-columns: repeat(3, 1fr);
+
+            @media (max-width: 1100px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @media (max-width: 710px) {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            gap: 2rem;
         }
     }
 `;
