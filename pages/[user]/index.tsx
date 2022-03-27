@@ -8,7 +8,8 @@ import email from "@images/email.svg";
 import location from "@images/location.svg";
 import { RepositoryCard } from "@components/RepositoryCard";
 import { Header } from "@components/Header";
-import { AllRepositoriesButton } from "@components/AllRepositoriesButton";
+import { Button } from "@components/Button";
+import { useRouter } from "next/router";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -61,7 +62,8 @@ type UserPageProps = {
 };
 
 export default function User({ user }: UserPageProps) {
-    console.log(user);
+    const router = useRouter();
+
     return (
         <C.UserHome>
             <Header />
@@ -155,7 +157,9 @@ export default function User({ user }: UserPageProps) {
                     </div>
                 </div>
             </C.Content>
-            <AllRepositoriesButton />
+            <Button onClick={() => {router.push(`/${user.login}/repositories`); console.log("logou")}}>
+                All repositories
+            </Button>
         </C.UserHome>
     );
 }
