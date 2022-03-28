@@ -16,36 +16,35 @@ const client = new GraphQLClient("https://api.github.com/graphql", {
 });
 
 type RepositoriesPageProps = {
-    user: {
-        name: string;
-        login: string;
-        repositories: {
-            edges: {
-                cursor: string;
-                node: {
-                    name: string;
-                    description: string;
-                    url: string;
-                    createdAt: string;
-                    databaseId: number;
-                    homepageUrl: string;
-                    forkCount: number;
-                    forkingAllowed: boolean;
-                    stargazerCount: number;
-                    languages: {
-                        totalSize: number;
-                        totalCount: number;
-                        edges: {
-                            size: number;
-                        };
-                        nodes: {
-                            color: string;
-                            name: string;
-                        };
-                    };
+    name: string;
+    login: string;
+    repositories: {
+        totalCount: number;
+        edges: {
+            cursor: string;
+            node: {
+                name: string;
+                description: string;
+                url: string;
+                createdAt: string;
+                databaseId: number;
+                homepageUrl: string;
+                forkCount: number;
+                forkingAllowed: boolean;
+                stargazerCount: number;
+                languages: {
+                    totalSize: number;
+                    totalCount: number;
+                    edges: {
+                        size: number;
+                    }[];
+                    nodes: {
+                        color: string;
+                        name: string;
+                    }[];
                 };
             };
-        };
+        }[];
     };
 };
 
@@ -53,7 +52,7 @@ export default function Repositories({
     repositories: { edges, totalCount },
     name,
     login,
-}: any) {
+}: RepositoriesPageProps) {
     const [repositories, setRepositories] = useState(edges);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -97,7 +96,7 @@ export default function Repositories({
             login: router.query.user,
             lastCursor: repositories[repositories.length - 1].cursor,
         });
-        setRepositories((p: any) => [...p, ...user.repositories.edges]);
+        setRepositories((p) => [...p, ...user.repositories.edges]);
         setLoading(false);
     }
 
@@ -112,7 +111,7 @@ export default function Repositories({
                     </Link>
                 </h1>
                 <C.RepositoriesGrid>
-                    {repositories.map((edge: any) => {
+                    {repositories.map((edge) => {
                         return (
                             <RepositoryCard {...edge.node} key={edge.cursor} />
                         );
