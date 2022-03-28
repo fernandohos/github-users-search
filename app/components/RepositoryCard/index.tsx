@@ -95,9 +95,7 @@ export function RepositoryCard(props: RepositoryCardType) {
                                 {language.name} {languagePercentage.toFixed(2)}%
                             </p>
                         </C.Language>
-                    ) : (
-                        <></>
-                    );
+                    ) : null;
                 })}
                 {(function () {
                     const otherPercentage =
