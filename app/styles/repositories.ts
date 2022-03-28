@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
 export const Repositories = styled.div`
+> h1 {
+    font-size: 1.8rem;
+    span {
+        color: #999;
+        font-size: 1.4rem;
+        margin-left: 1rem;
+        cursor: pointer;
+    }
+}
     width: 88%;
     margin: 3rem auto;
 `;

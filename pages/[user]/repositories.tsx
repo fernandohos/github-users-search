@@ -7,6 +7,7 @@ import { RepositoryCard } from "@components/RepositoryCard";
 import { Button } from "@components/Button";
 import { useRouter } from "next/router";
 import { Loader } from "@components/Loader";
+import Link from "next/link";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -14,8 +15,44 @@ const client = new GraphQLClient("https://api.github.com/graphql", {
     },
 });
 
+type RepositoriesPageProps = {
+    user: {
+        name: string;
+        login: string;
+        repositories: {
+            edges: {
+                cursor: string;
+                node: {
+                    name: string;
+                    description: string;
+                    url: string;
+                    createdAt: string;
+                    databaseId: number;
+                    homepageUrl: string;
+                    forkCount: number;
+                    forkingAllowed: boolean;
+                    stargazerCount: number;
+                    languages: {
+                        totalSize: number;
+                        totalCount: number;
+                        edges: {
+                            size: number;
+                        };
+                        nodes: {
+                            color: string;
+                            name: string;
+                        };
+                    };
+                };
+            };
+        };
+    };
+};
+
 export default function Repositories({
     repositories: { edges, totalCount },
+    name,
+    login,
 }: any) {
     const [repositories, setRepositories] = useState(edges);
     const router = useRouter();
@@ -68,6 +105,12 @@ export default function Repositories({
         <>
             <Header />
             <C.Repositories>
+                <h1>
+                    {name}{" "}
+                    <Link href={`/${login}`} passHref>
+                        <span>/{login}</span>
+                    </Link>
+                </h1>
                 <C.RepositoriesGrid>
                     {repositories.map((edge: any) => {
                         return (
@@ -89,6 +132,8 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
     const repositoriesQuery = gql`
         query GetRepositories($login: String!) {
             user(login: $login) {
+                name
+                login
                 repositories(first: 12) {
                     totalCount
                     edges {
