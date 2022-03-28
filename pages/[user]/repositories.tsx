@@ -6,6 +6,7 @@ import { gql, GraphQLClient } from "graphql-request";
 import { RepositoryCard } from "@components/RepositoryCard";
 import { Button } from "@components/Button";
 import { useRouter } from "next/router";
+import { Loader } from "@components/Loader";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -18,8 +19,10 @@ export default function Repositories({
 }: any) {
     const [repositories, setRepositories] = useState(edges);
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     async function loadMore() {
+        setLoading(true);
         const repositoriesQuery = gql`
             query GetRepositories($login: String!, $lastCursor: String!) {
                 user(login: $login) {
@@ -58,6 +61,7 @@ export default function Repositories({
             lastCursor: repositories[repositories.length - 1].cursor,
         });
         setRepositories((p: any) => [...p, ...user.repositories.edges]);
+        setLoading(false);
     }
 
     return (
@@ -72,7 +76,9 @@ export default function Repositories({
                     })}
                 </C.RepositoriesGrid>
                 {totalCount !== repositories.length && (
-                    <Button onClick={loadMore}>Load more</Button>
+                    <Button onClick={loadMore}>
+                        {loading ? <Loader /> : "Load more"}
+                    </Button>
                 )}
             </C.Repositories>
         </>
