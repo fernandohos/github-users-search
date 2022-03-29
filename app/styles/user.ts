@@ -179,6 +179,14 @@ export const Content = styled.main`
             margin-top: 2rem;
         }
 
+        .empty-repos {
+            text-align: center;
+
+            > p {
+                margin-top: 2rem;
+            }
+        }
+
         .repositories-grid {
             margin-top: 2rem;
             display: grid;

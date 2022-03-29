@@ -10,6 +10,7 @@ import { RepositoryCard } from "@components/RepositoryCard";
 import { Header } from "@components/Header";
 import { Button } from "@components/Button";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const client = new GraphQLClient("https://api.github.com/graphql", {
     headers: {
@@ -145,19 +146,42 @@ export default function User({ user }: UserPageProps) {
                         Pinned Repositories &#40;{user.pinnedItems.totalCount}
                         &#41;
                     </p>
-                    <div className="repositories-grid">
-                        {user.pinnedItems.nodes.map((repository) => {
-                            return (
-                                <RepositoryCard
-                                    key={repository.databaseId}
-                                    {...repository}
+                    {user.pinnedItems.totalCount ? (
+                        <div className="repositories-grid">
+                            {user.pinnedItems.nodes.map((repository) => {
+                                return (
+                                    <RepositoryCard
+                                        key={repository.databaseId}
+                                        {...repository}
+                                    />
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <div className="empty-repos">
+                            <a
+                                href="https://octodex.github.com/octobiwan/"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Image
+                                    src="https://octodex.github.com/images/octobiwan.jpg"
+                                    alt="Octobi Wan Catnobi"
+                                    height={150}
+                                    width={150}
                                 />
-                            );
-                        })}
-                    </div>
+                            </a>
+                            <p>this user does not have any pinned repository</p>
+                        </div>
+                    )}
                 </div>
             </C.Content>
-            <Button onClick={() => {router.push(`/${user.login}/repositories`); console.log("logou")}}>
+            <Button
+                onClick={() => {
+                    router.push(`/${user.login}/repositories`);
+                    console.log("logou");
+                }}
+            >
                 All repositories
             </Button>
         </C.UserHome>
