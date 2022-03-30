@@ -64,11 +64,11 @@ export const Language = styled.div<{ color: string; size: number }>`
     height: 60%;
 
     &:last-child {
-        border-bottom-right-radius: 1rem;
+        border-bottom-right-radius: 0.8rem;
     }
 
     &:first-child {
-        border-bottom-left-radius: 1rem;
+        border-bottom-left-radius: 0.8rem;
     }
 
     &:hover {
