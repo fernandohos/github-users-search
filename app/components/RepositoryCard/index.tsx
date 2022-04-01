@@ -46,7 +46,8 @@ export function RepositoryCard(props: RepositoryCardType) {
                     <p>
                         visit:{" "}
                         <a href={props.homepageUrl}>
-                            {props.homepageUrl.split("//")[1]}
+                            {props.homepageUrl.split("//")[1] ??
+                                props.homepageUrl}
                         </a>
                     </p>
                 )}
