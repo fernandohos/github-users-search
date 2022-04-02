@@ -23,7 +23,7 @@ export const Home = styled.div`
 
         input {
             border: none;
-            padding: 20px;
+            padding: 2rem;
             width: 45rem;
             font-size: 1.8rem;
             outline: none;
@@ -38,6 +38,7 @@ export const Home = styled.div`
             border: none;
             background: orange;
             height: 100%;
+            width: 6.7rem;
             aspect-ratio: 1/1;
             outline: none;
             transition: all ease .2s;
